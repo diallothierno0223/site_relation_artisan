@@ -1,0 +1,172 @@
+@extends('layouts.master')
+
+@section('content')
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+  <style>
+
+    .card1:hover {
+      background:#00ffb6;
+      border:1px solid #00ffb6;
+    }
+
+    .card1:hover .list-group-item{
+      background:#00ffb6 !important
+    }
+
+    .card2:hover {
+      background:#00C9FF;
+      border:1px solid #00C9FF;
+    }
+
+    .card2:hover .list-group-item{
+      background:#00C9FF !important
+    }
+
+
+    .card3:hover {
+      background:#ff95e9;
+      border:1px solid #ff95e9;
+    }
+
+    .card3:hover .list-group-item{
+      background:#ff95e9 !important
+    }
+
+
+    .card:hover .btn-outline-dark{
+      color:white;
+      background:#212529;
+    }
+
+    .ok {
+      color:white;
+      background:#20e920;
+    }
+
+  </style>
+
+  <script>
+    function selectionne(n){
+        button = document.getElementById('p')
+        button.classList.add('ok')
+
+        newCard = document.getElementById(n)
+        newCard.classList.add('ok')
+        input = document.getElementById('formule')
+        if(input.value == '1' || input.value == '2' || input.value == '3'){
+            document.getElementById(input.value).classList.remove('ok')
+        }
+        input.value = n
+    }
+  </script>
+
+  <div class="container-fluid">
+    <div class="container p-2">
+      <div class=row>
+        @if(Session::has('suscribe_expired'))
+            <div class="alert alert-danger mt-3" role="alert">
+                <p class="">{{ Session::get('suscribe_expired')}}</p>
+            </div>
+        @endif
+        @if(Session::has('not_suscribe'))
+            <div class="alert alert-danger mt-3" role="alert">
+                <p class="">{{ Session::get('not_suscribe')}}</p>
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger mt-3" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+      </div>
+    </div>
+    <div class="container p-5">
+      <div class="row">
+        <div class="col-lg-4 col-md-12 mb-4">
+          <div class="card card1 h-100" id='1'>
+            <div class="card-body">
+             
+              <h5 class="card-title">Basic</h5>
+              <small class='text-muted'>Individual</small>
+              <br><br>
+              <span class="h2">$8</span>/month
+              <br><br>
+              <div class="d-grid my-3">
+                <button class="btn btn-outline-dark btn-block" onclick="selectionne('1')">Select</button>
+              </div>
+              <ul>
+                <li>Cras justo odio</li>
+                <li>Dapibus ac facilisis in</li>
+                <li>Vestibulum at eros</li>
+                
+              </ul>
+            </div>
+
+            
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12 mb-4">
+          <div class="card card2 h-100" id='2'>
+            <div class="card-body">
+             
+              <h5 class="card-title">Standard</h5>
+              <small class='text-muted'>Small Business</small>
+              <br><br>
+              <span class="h2">$20</span>/month
+              <br><br>
+              <div class="d-grid my-3">
+                <button class="btn btn-outline-dark btn-block" onclick="selectionne('2')">Select</button>
+              </div>
+              <ul>
+                <li>Cras justo odio</li>
+                <li>Dapibus ac facilisis in</li>
+                <li>Vestibulum at eros</li>
+                
+              </ul>
+            </div>
+
+            
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12 mb-4">
+          <div class="card card3 h-100" id='3'>
+            <div class="card-body">
+             
+              <h5 class="card-title">Premium</h5>
+              <small class='text-muted'>Large Company</small>
+              <br><br>
+              <span class="h2">$40</span>/month
+              <br><br>
+              <div class="d-grid my-3">
+                <button class="btn btn-outline-dark btn-block" onclick="selectionne('3')">Select</button>
+              </div>
+              <ul>
+                <li>Cras justo odio</li>
+                <li>Dapibus ac facilisis in</li>
+                <li>Vestibulum at eros</li>
+                
+              </ul>
+            </div>
+
+            
+          </div>
+        </div>
+        <form method="post" action="{{ route('artisan.abonnement.store') }}">@csrf
+            <input type="hidden" name="formule" value="" id="formule"/>
+            <button type="submit" id="p" class="btn btn-outline-dark btn-block">payer</button>
+        </form>
+      </div>    
+    </div>
+
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+@endsection
